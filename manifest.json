@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+
+    "name": "RED//CORE",
+    "version": "1.0.0",
+
+    "description": "A cyber-themed productivity dashboard.",
+
+    "permissions": [
+        "storage",
+        "geolocation"
+    ],
+
+    "host_permissions": [
+        "https://api.open-meteo.com/*"
+    ],
+
+    "chrome_url_overrides": {
+        "newtab": "newtab/newtab.html"
+    },
+
+    "action": {
+        "default_title": "RED//CORE"
+    }
+}

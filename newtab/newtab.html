@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RED//CORE</title>
+
+    <link rel="stylesheet" href="newtab.css">
+</head>
+
+<body>
+
+    <!-- Background effects -->
+    <div class="background-grid"></div>
+    <div class="scanlines"></div>
+
+    <main class="dashboard">
+
+        <!-- HEADER -->
+        <header class="header">
+
+    <div class="brand">
+        <span class="brand-symbol">◈</span>
+        <span>RED//CORE</span>
+    </div>
+
+    <div class="header-center">
+        <span>SECURE CHANNEL</span>
+        <span>//</span>
+        <span>LOCAL NODE</span>
+    </div>
+
+    <div class="header-status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+    </div>
+
+</header>
+<div class="telemetry">
+
+    <div>
+        NODE <span>01</span>
+    </div>
+
+    <div>
+        UPLINK <span>ACTIVE</span>
+    </div>
+
+    <div>
+        ENCRYPTION <span>AES-256</span>
+    </div>
+
+    <div>
+        STATUS <span>STABLE</span>
+    </div>
+
+</div>
+
+
+        <section class="hero">
+
+    <div class="hero-corner corner-tl"></div>
+    <div class="hero-corner corner-tr"></div>
+    <div class="hero-corner corner-bl"></div>
+    <div class="hero-corner corner-br"></div>
+
+    <div class="clock-container">
+
+        <div class="clock-label">
+            LOCAL SYSTEM TIME
+        </div>
+
+        <div id="clock" class="clock">
+            00:00:00
+        </div>
+
+        <div id="date" class="date">
+            WEDNESDAY // 26 AUGUST 2026
+        </div>
+
+        <form id="search-form" class="search-form">
+
+            <div class="search-box">
+
+                <span class="search-icon">⌕</span>
+
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search Google"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+                <button
+                    type="submit"
+                    class="search-button"
+                    aria-label="Search"
+                >
+                    ↵
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+        <!-- MAIN GRID -->
+        <section class="main-grid">
+
+
+            <!-- WEATHER -->
+            <div class="panel weather-panel">
+
+    <div class="panel-header">
+
+        <span>01 // WEATHER</span>
+
+        <span class="panel-indicator">●</span>
+
+    </div>
+
+
+    <div class="weather-content">
+
+        <div id="weather-icon" class="weather-icon">
+            ☁
+        </div>
+
+        <div>
+
+            <div id="temperature" class="temperature">
+                --°C
+            </div>
+
+            <div id="weather-status" class="weather-status">
+                INITIALIZING...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="weather-details">
+
+        <div class="weather-detail">
+
+            <span>HUMIDITY</span>
+
+            <strong id="humidity">
+                --%
+            </strong>
+
+        </div>
+
+
+        <div class="weather-detail">
+
+            <span>WIND</span>
+
+            <strong id="wind">
+                -- km/h
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div id="location" class="location">
+        LOCATION // DETECTING...
+    </div>
+
+</div>
+
+            <!-- NOTES -->
+            <!-- NOTES -->
+<div class="panel notes-panel">
+
+    <div class="panel-header">
+
+        <span>02 // NOTES</span>
+
+        <button
+            id="new-note-button"
+            class="panel-button"
+            title="Create new note"
+        >
+            +
+        </button>
+
+    </div>
+
+
+    <div
+        id="notes-content"
+        class="notes-content"
+    >
+
+        <div
+            id="empty-state"
+            class="empty-state"
+        >
+
+            <div class="empty-icon">
+                +
+            </div>
+
+            <p>NO NOTES FOUND</p>
+
+            <span>
+                Create your first note
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <span>
+                RED//CORE v1.0
+            </span>
+
+            <span>
+                DHRUV D KALAL
+            </span>
+
+            <span>
+                <span class="status-dot"></span>
+                ALL SYSTEMS NOMINAL
+            </span>
+
+        </footer>
+
+    </main>
+
+    <!-- =========================================
+     NOTE EDITOR
+========================================= -->
+
+<div
+    id="note-modal"
+    class="note-modal"
+>
+
+    <div class="note-editor">
+
+        <div class="note-editor-header">
+
+            <span>
+                NEW // NOTE
+            </span>
+
+            <button
+                id="close-note-modal"
+                class="close-button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <input
+            type="text"
+            id="note-title"
+            class="note-title"
+            placeholder="NOTE TITLE"
+            autocomplete="off"
+        >
+
+
+        <textarea
+            id="note-body"
+            class="note-body"
+            placeholder="Write your note..."
+        ></textarea>
+
+
+        <div class="note-editor-footer">
+
+            <button
+                id="cancel-note"
+                class="note-action secondary"
+            >
+                CANCEL
+            </button>
+
+            <button
+                id="save-note"
+                class="note-action primary"
+            >
+                SAVE NOTE
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <script src="newtab.js"></script>
+
+</body>
+
+</html>
