@@ -1,451 +1,209 @@
-# RED//CORE --- Death Note Theme
+# 🔴 RED//CORE
 
-## Overview
+> A cyber-themed Chrome New Tab extension built with HTML, CSS and JavaScript.
 
-RED//CORE supports a **Death Note-inspired visual theme** while keeping
-the existing red-on-black cyber interface.
+RED//CORE transforms the default Chrome New Tab page into a futuristic red-and-black dashboard with productivity tools, a digital clock, weather information, notes, website shortcuts, and customizable themes.
 
-The theme changes the visual appearance of the dashboard without
-changing the core functionality:
+---
 
--   Digital clock
--   Google search
--   Weather
--   Notes
--   Website shortcuts
--   RED//CORE branding
+## 🖥️ Preview
 
-------------------------------------------------------------------------
+<!-- Add your main screenshot here -->
 
-# 1. Activate the Death Note Theme
+<p align="center">
+  <img src="assets/SCREENSHOT.png" alt="RED//CORE Dashboard" width="900">
+</p>
 
-## Step 1 --- Prepare the theme assets
 
-Create a theme assets folder:
 
-``` text
-red-core/
-├── assets/
-│   ├── deathnote-bg.jpg
-│   ├── deathnote-logo.png
-│   └── ...
-│
-├── newtab/
-│   ├── newtab.html
-│   ├── newtab.css
-│   └── newtab.js
-│
-└── manifest.json
+---
+
+## 🔗 GitHub Repository
+
+<p align="center">
+
+[GIHUB REPO](https://github.com/Dhruvkalal90/RED-CORE.git)
+
+</p>
+
+
+---
+
+# ✨ Features
+
+## 🕒 Modern Digital Clock
+
+A large digital clock is displayed at the center of the dashboard.
+
+- Real-time clock
+- Automatic date display
+- Cyber-style typography
+- Red glow effects
+- Live system indicator
+
+---
+
+## 🔎 Google Search
+
+A Google-style search bar is integrated directly into the New Tab page.
+
+Features:
+
+- Google search
+- Press `Enter` to search
+- Minimal interface
+- RED//CORE styling
+- Keyboard-friendly
+
+---
+
+## 🌤️ Weather
+
+RED//CORE can display current weather information using the user's location.
+
+Displays:
+
+- 🌡️ Temperature
+- ☁️ Weather condition
+- 💧 Humidity
+- 💨 Wind speed
+- 📍 Location information
+
+Weather data is retrieved using the Open-Meteo API.
+---
+
+## 📥 Installation
+
+Follow the steps below to install **RED//CORE** as a Chrome extension.
+
+### 1. Clone the Repository
+
+Open a terminal / Command Prompt and run:
+
+```bash
+git clone https://github.com/YOUR-USERNAME/RED-CORE.git
 ```
 
-Recommended background:
-
--   Dark/black Death Note-inspired atmosphere
--   Red accent lighting
--   Minimal visual clutter
--   High contrast behind the clock and search bar
--   No important artwork directly behind text
-
-------------------------------------------------------------------------
-
-## Step 2 --- Add the theme class
-
-Add a theme class to the `<body>` element in `newtab.html`:
-
-``` html
-<body class="death-note-theme">
+Then move into the project folder:
+```bash
+cd RED-CORE
 ```
 
-This allows the theme CSS to be enabled without rewriting the existing
-dashboard.
+## OR
 
-------------------------------------------------------------------------
+### 2. Download ZIP Instead
 
-## Step 3 --- Add Death Note theme CSS
+If you don't want to use Git:
 
-Add the following to the bottom of `newtab.css`:
+- Open the RED//CORE GitHub repository.
+- Click Code.
+- Click Download ZIP.
+- Extract the downloaded ZIP file.
+- You should have a folder containing the extension files.
 
-``` css
-/* =========================================
-   DEATH NOTE THEME
-========================================= */
+Example:
 
-body.death-note-theme {
+RED-CORE/<br>
+├── manifest.json<br>
+├── newtab/<br>
+├── assets/<br>
+└── README.md<br>
 
-    background:
-        #030303;
+### 🌐 3. Open Chrome Extensions
 
-    color:
-        #e5e5e5;
-}
+Open Google Chrome and go to:
 
+chrome://extensions/
 
-body.death-note-theme .background-image {
+Alternatively:
 
-    background-image:
-        url("../assets/deathnote-bg.jpg");
+Click the ⋮ menu in Chrome.
+Select Extensions.
+Select Manage Extensions.
+### 🛠️ 4. Enable Developer Mode
 
-    background-size:
-        cover;
+On the Chrome Extensions page:
 
-    background-position:
-        center;
+Find Developer mode in the top-right corner.
+Turn it ON.
 
-    filter:
-        brightness(0.28)
-        contrast(1.25);
-}
+You should now see additional options such as:
 
+Load unpacked
+Pack extension
+Update
+### 📦 5. Load RED//CORE
 
-body.death-note-theme .brand {
+Click:
 
-    color:
-        #ffffff;
+Load unpacked
 
-    text-shadow:
-        0 0 12px rgba(255, 0, 0, 0.35);
-}
+Then select the root folder of the RED//CORE project.
 
+`Do not select the newtab folder.`
 
-body.death-note-theme .clock {
+Select the main project folder containing:
 
-    color:
-        #ffffff;
+manifest.json
 
-    text-shadow:
-        0 0 5px rgba(255, 0, 0, 0.9),
-        0 0 25px rgba(255, 0, 0, 0.45);
-}
+### 🔄 6. Reload the Extension
 
+After loading the extension:
 
-body.death-note-theme .panel {
+Find RED//CORE in the extensions list.
+If necessary, click the Reload ↻ button.
+Open a new Chrome tab.
 
-    background:
-        rgba(3, 3, 3, 0.82);
+RED//CORE should now replace Chrome's default New Tab page.
 
-    border-color:
-        rgba(255, 0, 0, 0.22);
-}
+### 🧪 7. Development / Updating
 
+If you modify the extension source code:
 
-body.death-note-theme .panel-header {
+HTML
+CSS
+JavaScript
+manifest.json
 
-    color:
-        #d0d0d0;
-}
+return to:
 
-
-body.death-note-theme .search-box {
-
-    background:
-        rgba(3, 3, 3, 0.9);
-
-    border-color:
-        rgba(255, 0, 0, 0.28);
-}
-
-
-body.death-note-theme .shortcut {
-
-    background:
-        rgba(3, 3, 3, 0.82);
-
-    border-color:
-        rgba(255, 0, 0, 0.25);
-}
-
-
-body.death-note-theme .shortcut:hover {
-
-    border-color:
-        #ff2020;
-
-    background:
-        rgba(255, 0, 0, 0.08);
-}
-```
-
-Adjust the image filename if your asset has a different name.
-
-------------------------------------------------------------------------
-
-# 2. Optional Theme Toggle
-
-If you want the user to be able to switch between the normal RED//CORE
-theme and the Death Note theme, add a button:
-
-``` html
-<button id="theme-toggle">
-    DEATH NOTE
-</button>
-```
-
-Then add:
-
-``` javascript
-const themeToggle =
-    document.getElementById("theme-toggle");
-
-themeToggle.addEventListener(
-    "click",
-    async () => {
-
-        document.body.classList.toggle(
-            "death-note-theme"
-        );
-
-        const enabled =
-            document.body.classList.contains(
-                "death-note-theme"
-            );
-
-        await chrome.storage.local.set({
-            deathNoteTheme: enabled
-        });
-
-    }
-);
-```
-
-To restore the selected theme when RED//CORE starts:
-
-``` javascript
-async function loadTheme() {
-
-    const result =
-        await chrome.storage.local.get(
-            "deathNoteTheme"
-        );
-
-    if (result.deathNoteTheme) {
-
-        document.body.classList.add(
-            "death-note-theme"
-        );
-
-    }
-
-}
-
-loadTheme();
-```
-
-This makes the theme preference persistent.
-
-------------------------------------------------------------------------
-
-# 3. Required Chrome Permission
-
-The theme toggle uses:
-
-``` javascript
-chrome.storage.local
-```
-
-Make sure `manifest.json` contains:
-
-``` json
-"permissions": [
-    "storage"
-]
-```
-
-If the weather system is still being used, keep its required permissions
-as well.
-
-------------------------------------------------------------------------
-
-# 4. Activate the Updated Theme
-
-After changing the files:
-
-1.  Save all files.
-2.  Open:
-
-``` text
-chrome://extensions
-```
-
-3.  Find **RED//CORE**.
-4.  Click **Reload**.
-5.  Open a new tab with:
-
-``` text
-Ctrl + T
-```
-
-The updated theme should now load.
-
-------------------------------------------------------------------------
-
-# 5. Auto-Update Note
-
-## Important
-
-There are two different situations:
-
-### Development / Unpacked Extension
-
-If RED//CORE is loaded using:
-
-**Chrome → Extensions → Developer mode → Load unpacked**
-
-Chrome does **not automatically reload changed source files** as an
-installed extension update.
-
-After changing:
-
--   `manifest.json`
--   JavaScript
--   CSS
--   HTML
--   extension permissions
--   assets
-
-use:
-
-``` text
-chrome://extensions
-```
+chrome://extensions/
 
 and click:
 
-**Reload**
+Reload ↻
 
-Then open a new tab.
+Then open a new tab to see the changes.
 
-------------------------------------------------------------------------
+### 🗑️ 8. Uninstall / Remove
 
-## Source File Changes
+To remove RED//CORE:
 
-For normal HTML/CSS/JS changes:
+Open:
+chrome://extensions/
+Find RED//CORE.
+Click Remove.
+Confirm the removal.
 
-``` text
-Edit file
-    ↓
-Save
-    ↓
-chrome://extensions
-    ↓
-Reload RED//CORE
-    ↓
-Open new tab
-```
+Chrome will return to its normal New Tab page.
 
-For `manifest.json` or permission changes, always reload the extension.
+---
 
-------------------------------------------------------------------------
+## 📝 Notes
 
-# 6. Published Extension Auto-Updates
+A persistent notes system is built directly into the dashboard.
 
-If RED//CORE is eventually published through the Chrome Web Store,
-updates can be distributed through the store.
+### Features
 
-The normal development workflow is different from the
-published-extension workflow:
+- Create notes
+- Edit notes
+- Delete notes
+- Multiple notes
+- Persistent storage
+- Notes remain after restarting Chrome
+- Cyber-themed note editor
 
-``` text
-DEVELOPMENT
+Notes are stored using:
 
-Local files
-    ↓
-Load unpacked
-    ↓
-Edit
-    ↓
-Reload extension
-```
-
-``` text
-PUBLISHED
-
-New extension version
-    ↓
-Publish update
-    ↓
-Chrome Web Store
-    ↓
-Chrome receives update
-    ↓
-Extension updates
-```
-
-Do not rely on an unpacked extension to automatically update itself.
-
-------------------------------------------------------------------------
-
-# 7. Versioning
-
-When preparing a release, update the version in `manifest.json`:
-
-``` json
-{
-    "manifest_version": 3,
-    "name": "RED//CORE",
-    "version": "1.1.0"
-}
-```
-
-Example version progression:
-
-``` text
-1.0.0
-│
-├── 1.0.1  Bug fixes
-├── 1.1.0  New features
-├── 1.2.0  More features
-└── 2.0.0  Major redesign
-```
-
-Keep the version number consistent with your release history.
-
-------------------------------------------------------------------------
-
-# 8. Recommended RED//CORE Theme Structure
-
-``` text
-RED//CORE
-│
-├── Core UI
-│   ├── Clock
-│   ├── Google Search
-│   └── Telemetry
-│
-├── Utilities
-│   ├── Weather
-│   ├── Notes
-│   └── Shortcuts
-│
-├── Themes
-│   ├── RED//CORE Default
-│   └── Death Note
-│
-├── Assets
-│   ├── Backgrounds
-│   ├── Icons
-│   └── Logos
-│
-└── Extension
-    ├── manifest.json
-    └── Chrome Storage
-```
-
-## Final workflow
-
-``` text
-Edit RED//CORE
-      ↓
-Save files
-      ↓
-chrome://extensions
-      ↓
-Reload
-      ↓
-Ctrl + T
-      ↓
-Updated theme / features
-```
-
-For the Death Note theme, keep the visual inspiration focused on a dark,
-gothic, notebook-and-red-accent aesthetic rather than copying protected
-artwork or logos directly.
+```text
+chrome.storage.local
