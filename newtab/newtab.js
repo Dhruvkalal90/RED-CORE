@@ -6,18 +6,25 @@
 // ---------- CLOCK ----------
 
 function updateClock() {
-
     const now = new Date();
-
-    const hours = String(now.getHours()).padStart(2, "0");
-
+    
+    // 1. Change to 'let' so it can be reassigned
+    let hours = now.getHours(); 
     const minutes = String(now.getMinutes()).padStart(2, "0");
-
     const seconds = String(now.getSeconds()).padStart(2, "0");
+    
+    // 2. Determine AM or PM
+    const meri = hours >= 12 ? "PM" : "AM";
+    
+    // 3. Convert 24h to 12h format correctly (handles 0 and 12) and pad it
+    hours = hours % 12 || 12;
+    const formattedHours = String(hours).padStart(2, "0");
 
+    // 4. Update the DOM
     document.getElementById("clock").textContent =
-        `${hours}:${minutes}:${seconds}`;
+        `${formattedHours}:${minutes}:${seconds} ${meri}`;
 }
+
 
 
 // ---------- DATE ----------
@@ -715,13 +722,13 @@ async function saveCurrentNote() {
 
 async function deleteNote(id) {
 
-    const confirmed =
+    /*const confirmed =
         confirm("DELETE THIS NOTE?");
 
 
     if (!confirmed) {
         return;
-    }
+    }*/
 
 
     const notes =
@@ -997,3 +1004,573 @@ document.addEventListener(
 
 renderNotes();
 
+
+// ==========================================
+// WEBSITE SHORTCUTS
+// ==========================================
+
+const addShortcutButton =
+    document.getElementById(
+        "add-shortcut-button"
+    );
+
+const shortcutsContainer =
+    document.getElementById(
+        "shortcuts-container"
+    );
+
+const shortcutModal =
+    document.getElementById(
+        "shortcut-modal"
+    );
+
+const shortcutName =
+    document.getElementById(
+        "shortcut-name"
+    );
+
+const shortcutUrl =
+    document.getElementById(
+        "shortcut-url"
+    );
+
+const closeShortcutModal =
+    document.getElementById(
+        "close-shortcut-modal"
+    );
+
+const cancelShortcut =
+    document.getElementById(
+        "cancel-shortcut"
+    );
+
+const saveShortcutButton =
+    document.getElementById(
+        "save-shortcut"
+    );
+
+
+// ==========================================
+// CONSTANT
+// ==========================================
+
+const MAX_SHORTCUTS = 20;
+
+
+// ==========================================
+// OPEN SHORTCUT MODAL
+// ==========================================
+
+async function openShortcutModal() {
+
+    const shortcuts =
+        await getShortcuts();
+
+    if (
+        shortcuts.length >= MAX_SHORTCUTS
+    ) {
+
+        return;
+
+    }
+
+    shortcutName.value = "";
+
+    shortcutUrl.value = "";
+
+    shortcutModal.classList.add(
+        "active"
+    );
+
+    setTimeout(() => {
+
+        shortcutName.focus();
+
+    }, 100);
+
+}
+
+
+// ==========================================
+// CLOSE SHORTCUT MODAL
+// ==========================================
+
+function closeShortcutEditor() {
+
+    shortcutModal.classList.remove(
+        "active"
+    );
+
+    shortcutName.value = "";
+
+    shortcutUrl.value = "";
+
+}
+
+
+// ==========================================
+// GET STORED SHORTCUTS
+// ==========================================
+
+async function getShortcuts() {
+
+    try {
+
+        const result =
+            await chrome.storage.local.get(
+                "redcore_shortcuts"
+            );
+
+        return result.redcore_shortcuts || [];
+
+    } catch (error) {
+
+        console.error(
+            "[RED//CORE] Could not read shortcuts:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+// ==========================================
+// TEMPORARY SYNCHRONOUS CACHE
+// ==========================================
+
+
+
+// ==========================================
+// SAVE SHORTCUTS
+// ==========================================
+
+async function saveShortcuts(
+    shortcuts
+) {
+
+    try {
+
+        await chrome.storage.local.set({
+
+            redcore_shortcuts:
+                shortcuts
+
+        });
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "[RED//CORE] Could not save shortcuts:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+// ==========================================
+// NORMALIZE URL
+// ==========================================
+
+function normalizeShortcutURL(
+    value
+) {
+
+    let url =
+        value.trim();
+
+
+    if (
+        !url.startsWith("http://") &&
+        !url.startsWith("https://")
+    ) {
+
+        url =
+            "https://" + url;
+
+    }
+
+
+    try {
+
+        const parsed =
+            new URL(url);
+
+
+        if (
+            parsed.protocol !== "http:" &&
+            parsed.protocol !== "https:"
+        ) {
+
+            return null;
+
+        }
+
+
+        return parsed.href;
+
+    } catch {
+
+        return null;
+
+    }
+
+}
+
+
+// ==========================================
+// ADD SHORTCUT
+// ==========================================
+
+async function addShortcut() {
+
+    const name =
+        shortcutName.value.trim();
+
+    const url =
+        normalizeShortcutURL(
+            shortcutUrl.value
+        );
+
+
+    if (!name) {
+
+        alert(
+            "Please enter a website name."
+        );
+
+        shortcutName.focus();
+
+        return;
+
+    }
+
+
+    if (!url) {
+
+        alert(
+            "Please enter a valid website URL."
+        );
+
+        shortcutUrl.focus();
+
+        return;
+
+    }
+
+
+    const shortcuts =
+        await getShortcuts();
+
+
+    if (
+        shortcuts.length >= MAX_SHORTCUTS
+    ) {
+
+        alert(
+            "Maximum of 20 shortcuts reached."
+        );
+
+        closeShortcutEditor();
+
+        return;
+
+    }
+
+
+    const shortcut = {
+
+        id:
+            Date.now().toString(),
+
+        name:
+            name,
+
+        url:
+            url
+
+    };
+
+
+    shortcuts.push(
+        shortcut
+    );
+
+
+    const saved =
+        await saveShortcuts(
+            shortcuts
+        );
+
+
+    if (!saved) {
+
+        alert(
+            "Could not save shortcut."
+        );
+
+        return;
+
+    }
+
+
+    closeShortcutEditor();
+
+    renderShortcuts();
+
+}
+
+
+// ==========================================
+// DELETE SHORTCUT
+// ==========================================
+
+async function deleteShortcut(
+    id
+) {
+
+    const confirmed =
+        confirm(
+            "DELETE THIS SHORTCUT?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    const shortcuts =
+        await getShortcuts();
+
+
+    const updated =
+        shortcuts.filter(
+            shortcut =>
+                shortcut.id !== id
+        );
+
+
+    await saveShortcuts(
+        updated
+    );
+
+
+    renderShortcuts();
+
+}
+
+
+// ==========================================
+// OPEN SHORTCUT
+// ==========================================
+
+function openShortcut(
+    url
+) {
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+}
+
+
+// ==========================================
+// RENDER SHORTCUTS
+// ==========================================
+
+async function renderShortcuts() {
+
+    const shortcuts =
+        await getShortcuts();
+
+
+    shortcutsCache =
+        shortcuts;
+
+
+    shortcutsContainer.innerHTML =
+        "";
+
+
+    // --------------------------------------
+    // ADD BUTTON VISIBILITY
+    // --------------------------------------
+
+    if (
+        shortcuts.length >= MAX_SHORTCUTS
+    ) {
+
+        addShortcutButton.style.display =
+            "none";
+
+    } else {
+
+        addShortcutButton.style.display =
+            "block";
+
+    }
+
+
+    // --------------------------------------
+    // CREATE SHORTCUT ITEMS
+    // --------------------------------------
+
+    shortcuts.forEach(
+        shortcut => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "shortcut";
+
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+            name.className =
+                "shortcut-name";
+
+            name.textContent =
+                shortcut.name;
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+            deleteButton.className =
+                "shortcut-delete";
+
+            deleteButton.textContent =
+                "×";
+
+            deleteButton.title =
+                "Delete shortcut";
+
+
+            // Open website
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    openShortcut(
+                        shortcut.url
+                    );
+
+                }
+            );
+
+
+            // Delete shortcut
+
+            deleteButton.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+                    deleteShortcut(
+                        shortcut.id
+                    );
+
+                }
+            );
+
+
+            item.appendChild(
+                name
+            );
+
+            item.appendChild(
+                deleteButton
+            );
+
+
+            shortcutsContainer.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// EVENTS
+// ==========================================
+
+addShortcutButton.addEventListener(
+    "click",
+    openShortcutModal
+);
+
+
+closeShortcutModal.addEventListener(
+    "click",
+    closeShortcutEditor
+);
+
+
+cancelShortcut.addEventListener(
+    "click",
+    closeShortcutEditor
+);
+
+
+saveShortcutButton.addEventListener(
+    "click",
+    addShortcut
+);
+
+
+// ==========================================
+// ESCAPE KEY
+// ==========================================
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            shortcutModal.classList.contains(
+                "active"
+            )
+        ) {
+
+            closeShortcutEditor();
+
+        }
+
+    }
+);
+
+
+// ==========================================
+// INITIALIZE SHORTCUTS
+// ==========================================
+
+renderShortcuts();
